@@ -45,6 +45,7 @@ func SigninHandler(c *gin.Context) {
 	accessToken, refreshToken := utils.UpdateSession(usr)
 	usr.AccessToken = accessToken
 	usr.RefreshToken = refreshToken
+	repository.UpdateUser(usr)
 	c.IndentedJSON(http.StatusOK, buildSigninResponse(usr))
 }
 
@@ -65,6 +66,7 @@ func RefreshHandler(c *gin.Context) {
 	accessToken, refreshToken := utils.UpdateSession(usr)
 	usr.AccessToken = accessToken
 	usr.RefreshToken = refreshToken
+	repository.UpdateUser(usr)
 	c.IndentedJSON(http.StatusOK, buildRefreshResponse(usr))
 }
 
@@ -150,6 +152,7 @@ func UpdateOrganizationHandler(c *gin.Context) {
 
 	org.Name = updateOrganizationData.Name
 	org.Description = updateOrganizationData.Description
+	repository.UpdateOrganization(org)
 	c.IndentedJSON(http.StatusOK, buildUpdateOrganizationResponse(*org))
 }
 
@@ -176,7 +179,7 @@ func InviteUserHandler(c *gin.Context) {
 	}
 
 	invitedUser := repository.GetUserByEmail(inviteData.Email)
-	if invitedUser == nil {
+	if invitedUser == nil || invitedUser.Email == "" {
 		c.IndentedJSON(http.StatusNotFound, gin.H{"message": "There is no user with such email"})
 		return
 	}

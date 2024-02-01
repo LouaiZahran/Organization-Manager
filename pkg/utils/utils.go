@@ -7,7 +7,7 @@ import (
 )
 
 func UpdateSession(usr *models.User) (string, string) {
-	accessToken := "Bearer " + uuid.New().String()
+	accessToken := uuid.New().String()
 	refreshToken := uuid.New().String()
 	return accessToken, refreshToken
 }

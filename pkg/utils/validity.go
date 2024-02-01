@@ -7,7 +7,7 @@ import (
 
 func IsValidSignup(signupData models.SignupModel) bool {
 	user := repository.GetUserByEmail(signupData.Email)
-	return user == nil
+	return user == nil || user.Email == ""
 }
 
 func IsValidSignin(signinData models.SigninModel) bool {
@@ -24,12 +24,12 @@ func IsValidRefreshToken(refreshToken string) bool {
 	}
 
 	user := repository.GetUserByRefreshToken(refreshToken)
-	return user != nil
+	return user != nil && user.Email != ""
 }
 
 func IsAuthorized(authHeader string) bool {
 	user := repository.GetUserByAccessToken(authHeader)
-	return user != nil
+	return user != nil && user.Email != ""
 }
 
 func IsValidOrganization(name string) bool {
@@ -38,7 +38,7 @@ func IsValidOrganization(name string) bool {
 	}
 
 	organization := repository.GetOrganizationByName(name)
-	return organization == nil
+	return organization != nil && organization.Name != ""
 }
 
 func IsValidOrganizationID(ID string) bool {
@@ -47,6 +47,5 @@ func IsValidOrganizationID(ID string) bool {
 	}
 
 	organization := repository.GetOrganizationById(ID)
-
-	return organization == nil
+	return organization != nil && organization.Name != ""
 }

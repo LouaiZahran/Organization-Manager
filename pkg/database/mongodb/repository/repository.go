@@ -20,7 +20,7 @@ var cancel context.CancelFunc
 
 func InitDatabase() {
 	fmt.Println("Starting the DB connection...")
-	ctx, cancel = context.WithTimeout(context.Background(), 10*time.Second)
+	ctx, cancel = context.WithTimeout(context.Background(), 1000*time.Second)
 
 	serverAPI := options.ServerAPI(options.ServerAPIVersion1)
 	opts := options.Client().ApplyURI(os.Getenv("MONGO_URL")).SetServerAPIOptions(serverAPI)
@@ -47,7 +47,7 @@ func AddUser(user models.User) {
 }
 
 func AddOrganization(organization models.Organization) {
-	UsersCollection.InsertOne(ctx, organization)
+	OrganizationsCollection.InsertOne(ctx, organization)
 }
 
 func AddMemberToOrganization(org *models.Organization, usr models.User, accessLevel string) {
@@ -66,6 +66,31 @@ func AddMemberToOrganization(org *models.Organization, usr models.User, accessLe
 	if err == nil {
 		fmt.Println(result.ModifiedCount)
 	}
+}
+
+func UpdateUser(user *models.User) {
+	filter := bson.M{"email": user.Email}
+	update := bson.M{
+		"$set": bson.M{
+			"name":          user.Name,
+			"email":         user.Email,
+			"password":      user.HashedPassword,
+			"access_token":  user.AccessToken,
+			"refresh_token": user.RefreshToken,
+		},
+	}
+	UsersCollection.UpdateOne(ctx, filter, update)
+}
+
+func UpdateOrganization(organization *models.Organization) {
+	filter := bson.M{"organization_id": organization.ID}
+	update := bson.M{
+		"$set": bson.M{
+			"name":        organization.Name,
+			"description": organization.Description,
+		},
+	}
+	OrganizationsCollection.UpdateOne(ctx, filter, update)
 }
 
 func GetUserByEmail(email string) *models.User {
