@@ -1,0 +1,8 @@
+version: '3'
+services:
+  web:
+    build: ./docker
+    ports:
+      - "8080:8080"
+    environment:
+      - MONGO_URL=mongodb+srv://root:bitso@maincluster.9jrko1b.mongodb.net/?retryWrites=true&w=majority
