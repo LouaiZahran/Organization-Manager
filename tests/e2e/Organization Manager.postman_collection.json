@@ -1,0 +1,313 @@
+{
+	"info": {
+		"_postman_id": "d199a974-e6f4-48af-b081-6d8937dc8c90",
+		"name": "Organization Manager",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "18848641"
+	},
+	"item": [
+		{
+			"name": "Sign Up",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {}
+			},
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Demo\",\r\n    \"email\": \"demo@gmail.com\",\r\n    \"password\": \"abcd\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "127.0.0.1:8080/signup",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8080",
+					"path": [
+						"signup"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Sign In",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"louai0nasr@gmail.com\",\r\n    \"password\": \"abc\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "127.0.0.1:8080/signin",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8080",
+					"path": [
+						"signin"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Refresh Token",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"refresh_token\": \"d2121289-e1d0-4ee7-b198-2b0e710b27e7\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "127.0.0.1:8080/refresh-token",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8080",
+					"path": [
+						"refresh-token"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Organization",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "1cac8286-bffb-40d4-936c-b93aa184c21d",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Org 12\",\r\n    \"description\": \"descr\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "127.0.0.1:8080/organization",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8080",
+					"path": [
+						"organization"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Read Organization",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "ceb5bbb7-8fa4-4c1a-a8ad-83faa8ec356d",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "127.0.0.1:8080/organization/5eab114b-42a6-454a-bbbb-88e1d1b3ffae",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8080",
+					"path": [
+						"organization",
+						"5eab114b-42a6-454a-bbbb-88e1d1b3ffae"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Read All Organizations",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "1cac8286-bffb-40d4-936c-b93aa184c21d",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "127.0.0.1:8080/organization",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8080",
+					"path": [
+						"organization"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Organization",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "1cac8286-bffb-40d4-936c-b93aa184c21d",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"whatever\",\r\n    \"description\": \"new desc\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "127.0.0.1:8080/organization/8d4e0eca-fbc8-45e1-963a-50ecd2b1cd8e/",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8080",
+					"path": [
+						"organization",
+						"8d4e0eca-fbc8-45e1-963a-50ecd2b1cd8e",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Invite to Organization",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "1cac8286-bffb-40d4-936c-b93aa184c21d",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"user_email\": \"louai0demo@gmail.com\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "127.0.0.1:8080/organization/8d4e0eca-fbc8-45e1-963a-50ecd2b1cd8e/invite",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8080",
+					"path": [
+						"organization",
+						"8d4e0eca-fbc8-45e1-963a-50ecd2b1cd8e",
+						"invite"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Organization",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "1cac8286-bffb-40d4-936c-b93aa184c21d",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "127.0.0.1:8080/organization/f85fbe57-45db-4f1b-8201-97a749b889ca",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8080",
+					"path": [
+						"organization",
+						"f85fbe57-45db-4f1b-8201-97a749b889ca"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
