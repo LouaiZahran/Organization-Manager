@@ -1,18 +1,13 @@
 package utils
 
 import (
-	"fmt"
 	"organization-manager/pkg/database/mongodb/models"
 	"organization-manager/pkg/database/mongodb/repository"
 )
 
 func IsValidSignup(signupData models.SignupModel) bool {
-	for _, usr := range repository.Users {
-		if usr.Email == signupData.Email {
-			return false
-		}
-	}
-	return true
+	user := repository.GetUserByEmail(signupData.Email)
+	return user == nil
 }
 
 func IsValidSignin(signinData models.SigninModel) bool {
@@ -28,22 +23,13 @@ func IsValidRefreshToken(refreshToken string) bool {
 		return false
 	}
 
-	for _, usr := range repository.Users {
-		if usr.RefreshToken == refreshToken {
-			return true
-		}
-	}
-	return false
+	user := repository.GetUserByRefreshToken(refreshToken)
+	return user != nil
 }
 
 func IsAuthorized(authHeader string) bool {
-	for _, usr := range repository.Users {
-		fmt.Println(usr.AccessToken)
-		if usr.AccessToken == authHeader {
-			return true
-		}
-	}
-	return false
+	user := repository.GetUserByAccessToken(authHeader)
+	return user != nil
 }
 
 func IsValidOrganization(name string) bool {
@@ -51,12 +37,8 @@ func IsValidOrganization(name string) bool {
 		return false
 	}
 
-	for _, org := range repository.Organizations {
-		if org.Name == name {
-			return false
-		}
-	}
-	return true
+	organization := repository.GetOrganizationByName(name)
+	return organization == nil
 }
 
 func IsValidOrganizationID(ID string) bool {
@@ -64,11 +46,7 @@ func IsValidOrganizationID(ID string) bool {
 		return false
 	}
 
-	for _, org := range repository.Organizations {
-		if org.ID == ID {
-			return true
-		}
-	}
+	organization := repository.GetOrganizationById(ID)
 
-	return false
+	return organization == nil
 }

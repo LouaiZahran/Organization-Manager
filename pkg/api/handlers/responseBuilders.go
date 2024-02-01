@@ -50,3 +50,9 @@ func buildInviteUserResponse() models.InviteResponse {
 	response.Message = "User Invited"
 	return response
 }
+
+func buildDeleteOrganizationResponse() models.DeleteResponse {
+	var response models.DeleteResponse
+	response.Message = "Organization Deleted"
+	return response
+}

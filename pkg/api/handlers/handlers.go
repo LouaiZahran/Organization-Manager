@@ -5,9 +5,9 @@ import (
 	"organization-manager/pkg/database/mongodb/models"
 	"organization-manager/pkg/database/mongodb/repository"
 	"organization-manager/pkg/utils"
-	"strconv"
 
 	"github.com/gin-gonic/gin"
+	"github.com/google/uuid"
 )
 
 func SignupHandler(c *gin.Context) {
@@ -24,7 +24,7 @@ func SignupHandler(c *gin.Context) {
 	}
 
 	usr := utils.CreateUser(signupData)
-	repository.Users = append(repository.Users, usr)
+	repository.AddUser(usr)
 	c.IndentedJSON(http.StatusOK, buildSignupResponse())
 }
 
@@ -90,9 +90,9 @@ func CreateOrganizationHandler(c *gin.Context) {
 	var org models.Organization
 	org.Name = createOrganizationData.Name
 	org.Description = createOrganizationData.Description
-	org.ID = strconv.Itoa(len(repository.Organizations))
+	org.ID = uuid.New().String()
+	repository.AddOrganization(org)
 	repository.AddMemberToOrganization(&org, *repository.GetUserByAccessToken(authHeader), "Admin")
-	repository.Organizations = append(repository.Organizations, org)
 	c.IndentedJSON(http.StatusOK, buildCreateOrganizationResponse(org))
 }
 
@@ -186,10 +186,30 @@ func InviteUserHandler(c *gin.Context) {
 		return
 	}
 
-	var member models.OrganizationMember
-	member.Name = invitedUser.Name
-	member.Email = invitedUser.Email
-	member.AccessLevel = "Invited"
-	org.Members = append(org.Members, member)
+	repository.AddMemberToOrganization(org, *invitedUser, "Invited")
 	c.IndentedJSON(http.StatusOK, buildInviteUserResponse())
+}
+
+func DeleteOrganizationHandler(c *gin.Context) {
+	authHeader := c.GetHeader("Authorization")
+	if !utils.IsAuthorized(authHeader) {
+		c.IndentedJSON(http.StatusForbidden, gin.H{"message": "Unauthorized"})
+		return
+	}
+
+	ID := c.Param("organization_id")
+	if !utils.IsValidOrganizationID(ID) {
+		c.IndentedJSON(http.StatusForbidden, gin.H{"message": "The organization id is not valid"})
+		return
+	}
+
+	org := repository.GetOrganizationById(ID)
+	usr := repository.GetUserByAccessToken(authHeader)
+	if !repository.IsMember(*usr, *org) {
+		c.IndentedJSON(http.StatusForbidden, gin.H{"message": "You are not a member of this organization"})
+		return
+	}
+
+	repository.DeleteOrganization(ID)
+	c.IndentedJSON(http.StatusOK, buildDeleteOrganizationResponse())
 }

@@ -69,3 +69,7 @@ type InviteModel struct {
 type InviteResponse struct {
 	Message string `bson:"message" json:"message"`
 }
+
+type DeleteResponse struct {
+	Message string `bson:"message" json:"message"`
+}
