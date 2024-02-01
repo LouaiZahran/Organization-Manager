@@ -18,5 +18,5 @@ func SetupRouter() {
 	router.DELETE("/organization/:organization_id", handlers.DeleteOrganizationHandler)
 	router.POST("/organization/:organization_id/invite", handlers.InviteUserHandler)
 
-	router.Run("localhost:8080")
+	router.Run("0.0.0.0:8080")
 }
